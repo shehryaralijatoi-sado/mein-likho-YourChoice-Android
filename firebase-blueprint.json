@@ -1,0 +1,101 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile records",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["customer", "seller", "admin"] },
+        "phone": { "type": "string" },
+        "city": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "email", "role"]
+    },
+    "Seller": {
+      "title": "Seller",
+      "description": "Seller registration application and store information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "businessName": { "type": "string" },
+        "businessNameUrdu": { "type": "string" },
+        "ownerName": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "city": { "type": "string" },
+        "address": { "type": "string" },
+        "category": { "type": "string", "enum": ["electronics", "fashion", "beauty", "home"] },
+        "description": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected", "suspended"] },
+        "verified": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "totalSales": { "type": "number" },
+        "joinedDate": { "type": "string" }
+      },
+      "required": ["id", "businessName", "ownerName", "email", "phone", "category", "status"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Marketplace product listed by an approved seller",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "nameUrdu": { "type": "string" },
+        "category": { "type": "string", "enum": ["electronics", "fashion", "beauty", "home"] },
+        "price": { "type": "number" },
+        "originalPrice": { "type": "number" },
+        "image": { "type": "string" },
+        "stock": { "type": "number" },
+        "sellerId": { "type": "string" },
+        "sellerName": { "type": "string" },
+        "description": { "type": "string" },
+        "inStock": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "reviewCount": { "type": "number" }
+      },
+      "required": ["id", "name", "category", "price", "stock", "sellerId", "sellerName"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order with shipping and status updates",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "trackingCode": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "shippingAddress": { "type": "string" },
+        "city": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "total": { "type": "number" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "trackingCode", "customerName", "shippingAddress", "total", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "#/entities/User",
+      "description": "User profiles and role metadata"
+    },
+    "/sellers/{sellerId}": {
+      "schema": "#/entities/Seller",
+      "description": "Seller applications, approvals, and store info"
+    },
+    "/products/{productId}": {
+      "schema": "#/entities/Product",
+      "description": "Marketplace product catalog"
+    },
+    "/orders/{orderId}": {
+      "schema": "#/entities/Order",
+      "description": "Customer purchase orders"
+    }
+  }
+}
